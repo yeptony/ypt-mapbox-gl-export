@@ -1,4 +1,4 @@
-//@ts-expect-error aass
+//@ts-expect-error accesstoken
 import mapboxgl, { accessToken, Map as MapboxMap } from 'mapbox-gl';
 import 'js-loading-overlay';
 import {
@@ -58,7 +58,7 @@ export default class MapGenerator extends MapGeneratorBase {
 	protected getRenderedMap(container: HTMLElement, style: mapboxgl.Style) {
 		// Render map
 		const renderMap = new MapboxMap({
-			accessToken: this.accesstoken || (accessToken as unknown as string),
+			accessToken: this.accesstoken || accessToken,
 			container,
 			style,
 			center: this.map.getCenter(),
@@ -78,10 +78,12 @@ export default class MapGenerator extends MapGeneratorBase {
 		// eslint-disable-next-line
 		// @ts-ignore
 		const images = (this.map.style.imageManager || {}).images || [];
+		console.log('🚀 ~ file: map-generator.ts:80 ~ MapGenerator ~ getRenderedMap ~ images:', images);
 		if (images && Object.keys(images)?.length > 0) {
 			Object.keys(images).forEach((key) => {
 				if (!key) return;
-				if (!images[key].data) return; //@ts-expect-error dfg
+				if (!images[key].data) return;
+				// @ts-expect-error type
 				renderMap.addImage(key, images[key].data);
 			});
 		}
