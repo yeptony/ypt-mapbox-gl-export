@@ -81,7 +81,7 @@ export default class MapGenerator extends MapGeneratorBase {
 		if (images && Object.keys(images)?.length > 0) {
 			Object.keys(images).forEach((key) => {
 				if (!key) return;
-				if (!images[key].data) return; //@ts-ignore
+				if (!images[key].data) return; //@ts-expect-error dfg
 				renderMap.addImage(key, images[key].data);
 			});
 		}
