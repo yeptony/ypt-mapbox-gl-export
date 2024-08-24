@@ -1,5 +1,5 @@
 //@ts-expect-error aass
-import mapboxgl, { Map as MapboxMap } from 'mapbox-gl';
+import mapboxgl, { accessToken, Map as MapboxMap } from 'mapbox-gl';
 import 'js-loading-overlay';
 import {
 	defaultAttributionOptions,
@@ -14,7 +14,6 @@ import {
 	Unit,
 	UnitType
 } from '@watergis/maplibre-gl-export';
-import accessToken from 'mapbox-gl';
 
 export default class MapGenerator extends MapGeneratorBase {
 	private accesstoken: string | undefined;

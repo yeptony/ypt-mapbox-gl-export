@@ -1,7 +1,7 @@
 var ng = Object.defineProperty;
 var sg = (b, g, y) => g in b ? ng(b, g, { enumerable: !0, configurable: !0, writable: !0, value: y }) : b[g] = y;
 var Eu = (b, g, y) => sg(b, typeof g != "symbol" ? g + "" : g, y);
-import ag, { Map as og } from "mapbox-gl";
+import { Map as ag, accessToken as og } from "mapbox-gl";
 var lg = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, Yp = { exports: {} };
 /**
  * MapLibre GL JS
@@ -25500,7 +25500,7 @@ function(b) {
 */
 function(b) {
   function g() {
-    return (fi.canvg ? Promise.resolve(fi.canvg) : import("./index.es-zP0kIU98-DNhMNts0.mjs")).catch(function(y) {
+    return (fi.canvg ? Promise.resolve(fi.canvg) : import("./index.es-zP0kIU98-C3eyBmcF.mjs")).catch(function(y) {
       return Promise.reject(new Error("Could not load canvg: " + y));
     }).then(function(y) {
       return y.default ? y.default : y;
@@ -26962,8 +26962,8 @@ class I0 extends yf {
   }
   getRenderedMap(y, x) {
     var v;
-    const P = new og({
-      accessToken: this.accesstoken || ag,
+    const P = new ag({
+      accessToken: this.accesstoken || og,
       container: y,
       style: x,
       center: this.map.getCenter(),
@@ -27013,4 +27013,4 @@ export {
   zh as t,
   Tp as u
 };
-//# sourceMappingURL=index-Df_8DpTZ.mjs.map
+//# sourceMappingURL=index-RvTXjtxI.mjs.map
