@@ -1,4 +1,5 @@
-import { Map as MapboxMap } from 'mapbox-gl';
+//@ts-expect-error aass
+import mapboxgl, { Map as MapboxMap } from 'mapbox-gl';
 import 'js-loading-overlay';
 import {
 	defaultAttributionOptions,
