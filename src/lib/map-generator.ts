@@ -1,4 +1,4 @@
-import mapboxgl, { accessToken, Map as MapboxMap } from 'mapbox-gl';
+import { Map as MapboxMap } from 'mapbox-gl';
 import 'js-loading-overlay';
 import {
 	defaultAttributionOptions,
@@ -13,6 +13,7 @@ import {
 	Unit,
 	UnitType
 } from '@watergis/maplibre-gl-export';
+import accessToken from 'mapbox-gl';
 
 export default class MapGenerator extends MapGeneratorBase {
 	private accesstoken: string | undefined;
@@ -57,7 +58,7 @@ export default class MapGenerator extends MapGeneratorBase {
 	protected getRenderedMap(container: HTMLElement, style: mapboxgl.Style) {
 		// Render map
 		const renderMap = new MapboxMap({
-			accessToken: this.accesstoken || accessToken,
+			accessToken: this.accesstoken || (accessToken as unknown as string),
 			container,
 			style,
 			center: this.map.getCenter(),
@@ -80,7 +81,7 @@ export default class MapGenerator extends MapGeneratorBase {
 		if (images && Object.keys(images)?.length > 0) {
 			Object.keys(images).forEach((key) => {
 				if (!key) return;
-				if (!images[key].data) return;
+				if (!images[key].data) return; //@ts-ignore
 				renderMap.addImage(key, images[key].data);
 			});
 		}
