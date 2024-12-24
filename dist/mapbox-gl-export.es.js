@@ -1,4 +1,4 @@
-import { u as t, C as r, M as s, t as e, _ as i } from "./index-BdW4uJGa.mjs";
+import { u as t, C as r, M as s, t as e, _ as i } from "./index-BAuSJTi4.mjs";
 export {
   t as DPI,
   r as Format,
