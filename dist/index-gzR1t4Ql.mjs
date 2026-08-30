@@ -17993,9 +17993,9 @@ const Tp = {
   //5600 x 4800
   LANDSCAPE: [609.4, 304.65],
   EXTRA: [507.75, 406.2],
-  A_FORMAT: [440, 14, 406.2],
+  A_FORMAT: [440.14, 406.2],
   // 5200 x 4800
-  A_FORMAT_LANDSCAPE: [574.55, 175.07],
+  A_FORMAT_LANDSCAPE: [574.55, 304.71],
   // A2: [594, 420],
   // A3: [420, 297],
   A4: [297, 210]
@@ -25503,7 +25503,7 @@ function(b) {
 */
 function(b) {
   function g() {
-    return (fi.canvg ? Promise.resolve(fi.canvg) : import("./index.es-DIlDUQB2-DJKTPzH9.mjs")).catch(function(y) {
+    return (fi.canvg ? Promise.resolve(fi.canvg) : import("./index.es-sXM2oOcM-BTsBchms.mjs")).catch(function(y) {
       return Promise.reject(new Error("Could not load canvg: " + y));
     }).then(function(y) {
       return y.default ? y.default : y;
@@ -26351,6 +26351,22 @@ class yf {
     return g;
   }
   /**
+   * Resolve once the given map's style is usable.
+   * Until style.load fires, addImage/addSource/addLayer throw
+   * "Style is not done loading".
+   * @param renderMap Map object
+   * @returns Promise resolved when the style is loaded
+   */
+  whenStyleLoaded(g) {
+    return new Promise((y) => {
+      if (g.isStyleLoaded()) {
+        y();
+        return;
+      }
+      g.once("style.load", () => y());
+    });
+  }
+  /**
    * Generate and download Map image
    */
   generate() {
@@ -26391,7 +26407,7 @@ class yf {
       });
     }
     let v = this.getRenderedMap(P, A);
-    this.addNorthIconToMap(v).then(() => {
+    this.whenStyleLoaded(v).then(() => this.addNorthIconToMap(v)).then(() => {
       v.once("idle", () => {
         this.addAttributions(v) ? v.once("idle", () => {
           v = this.renderMapPost(v), this.getMarkers().length === 0 ? this.exportImage(v, x, y) : (v = this.renderMarkers(v), v.once("idle", () => {
@@ -26451,14 +26467,18 @@ class yf {
   addNorthIconImage(g) {
     const y = this.getIconWidth(g, this.northIconOptions.imageSizeFraction ?? 0.08);
     return new Promise((x) => {
+      if (!this.northIconOptions.image) {
+        x();
+        return;
+      }
       const P = new Image(y, y);
       P.onload = () => {
         this.northIconOptions.imageName && g.addImage(this.northIconOptions.imageName, P), x();
-      };
+      }, P.onerror = () => x();
       function A(v) {
         return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(v);
       }
-      this.northIconOptions.image && (P.src = A(this.northIconOptions.image));
+      P.src = A(this.northIconOptions.image);
     });
   }
   /**
@@ -26964,7 +26984,6 @@ class I0 extends yf {
     this.accesstoken = q;
   }
   getRenderedMap(y, x) {
-    var v;
     const P = new ag({
       accessToken: this.accesstoken || og,
       container: y,
@@ -26981,10 +27000,13 @@ class I0 extends yf {
       // eslint-disable-next-line
       // @ts-ignore
       transformRequest: this.map._requestManager._transformRequestFn
-    }), A = (this.map.style.imageManager || {}).images || [];
-    return console.log("🚀 ~ file: map-generator.ts:80 ~ MapGenerator ~ getRenderedMap ~ images:", A), A && ((v = Object.keys(A)) == null ? void 0 : v.length) > 0 && Object.keys(A).forEach((l) => {
-      l && A[l].data && P.addImage(l, A[l].data);
-    }), P;
+    }), A = (this.map.style.imageManager || {}).images || [], v = () => {
+      var l;
+      A && ((l = Object.keys(A)) == null ? void 0 : l.length) > 0 && Object.keys(A).forEach((M) => {
+        M && A[M].data && P.addImage(M, A[M].data);
+      });
+    };
+    return P.isStyleLoaded() ? v() : P.once("style.load", v), P;
   }
 }
 class L0 extends P0 {
@@ -27016,4 +27038,4 @@ export {
   zh as t,
   Tp as u
 };
-//# sourceMappingURL=index-Bkd3QruW.mjs.map
+//# sourceMappingURL=index-gzR1t4Ql.mjs.map

@@ -78,14 +78,22 @@ export default class MapGenerator extends MapGeneratorBase {
 		// eslint-disable-next-line
 		// @ts-ignore
 		const images = (this.map.style.imageManager || {}).images || [];
-		console.log('🚀 ~ file: map-generator.ts:80 ~ MapGenerator ~ getRenderedMap ~ images:', images);
-		if (images && Object.keys(images)?.length > 0) {
-			Object.keys(images).forEach((key) => {
-				if (!key) return;
-				if (!images[key].data) return;
-				// @ts-expect-error type
-				renderMap.addImage(key, images[key].data);
-			});
+		// renderMap has only just been constructed, so addImage would throw
+		// "Style is not done loading". Copy the sprite images once its style is up.
+		const copyImages = () => {
+			if (images && Object.keys(images)?.length > 0) {
+				Object.keys(images).forEach((key) => {
+					if (!key) return;
+					if (!images[key].data) return;
+					// @ts-expect-error type
+					renderMap.addImage(key, images[key].data);
+				});
+			}
+		};
+		if (renderMap.isStyleLoaded()) {
+			copyImages();
+		} else {
+			renderMap.once('style.load', copyImages);
 		}
 
 		return renderMap;
