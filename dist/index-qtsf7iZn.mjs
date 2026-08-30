@@ -17996,6 +17996,10 @@ const Tp = {
   A_FORMAT: [440.14, 406.2],
   // 5200 x 4800
   A_FORMAT_LANDSCAPE: [574.55, 304.71],
+  SATELLITE: [449.834, 362.3733],
+  // 5313 x 4280
+  SATELLITE_A: [415.036, 362.3733],
+  // 4902 x 4280
   // A2: [594, 420],
   // A3: [420, 297],
   A4: [297, 210]
@@ -25503,7 +25507,7 @@ function(b) {
 */
 function(b) {
   function m() {
-    return (fi.canvg ? Promise.resolve(fi.canvg) : import("./index.es-CM5Bx_30-BW1wxah9.mjs")).catch(function(y) {
+    return (fi.canvg ? Promise.resolve(fi.canvg) : import("./index.es-BEiEml56-DxIVH2Gw.mjs")).catch(function(y) {
       return Promise.reject(new Error("Could not load canvg: " + y));
     }).then(function(y) {
       return y.default ? y.default : y;
@@ -27062,4 +27066,4 @@ export {
   zh as t,
   Tp as u
 };
-//# sourceMappingURL=index-IO0g7IOD.mjs.map
+//# sourceMappingURL=index-qtsf7iZn.mjs.map
