@@ -47,3 +47,47 @@
 	width: 0;
 	position: fixed;
 }
+
+/*
+ * Theme isolation.
+ *
+ * The panel sits on .mapboxgl-ctrl-group, which mapbox-gl.css hard-codes to
+ * `background: #fff` in every theme. Its label, select and button set no colour
+ * of their own, so they inherit it from the host page - and a CSS reset that
+ * puts `color: inherit` on form controls (Tailwind's preflight does) hands them
+ * the page foreground. On a dark-themed host that is near-white text on the
+ * white panel, i.e. unreadable.
+ *
+ * State our own colours rather than inheriting, and pin the colour scheme so
+ * the native select popup stays light too.
+ */
+.mapboxgl-export-list {
+	background-color: #fff;
+	color: #333;
+	color-scheme: light;
+}
+
+.mapboxgl-export-list label,
+.mapboxgl-export-list .print-table,
+.mapboxgl-export-list td {
+	color: #333;
+}
+
+.mapboxgl-export-list select {
+	background-color: #fff;
+	color: #333;
+}
+
+.mapboxgl-export-list option {
+	background-color: #fff;
+	color: #333;
+}
+
+/*
+ * Specificity has to match the earlier
+ * `.mapboxgl-ctrl-group .mapboxgl-export-list button` rule, hence the tag on
+ * the end; it is later in the file, so it wins the tie.
+ */
+.mapboxgl-ctrl-group .mapboxgl-export-list button.generate-button {
+	color: #333;
+}
