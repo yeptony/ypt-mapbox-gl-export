@@ -68,6 +68,11 @@ export default class MapGenerator extends MapGeneratorBase {
 			interactive: false,
 			preserveDrawingBuffer: true,
 			fadeDuration: 0,
+			// getStyle() reports the projection the stylesheet declares, not the
+			// one the map is actually using, so a setProjection() call on the
+			// source map would otherwise be dropped and the export would render
+			// in a different projection than the map it came from.
+			projection: (this.map as MapboxMap).getProjection(),
 			// attributionControl: false,
 			// hack to read transfrom request callback function
 			// eslint-disable-next-line
